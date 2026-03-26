@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LE CHEVAL - Présentation</title>
+    <title>LE CHEVAL - Diaporama Interactif</title>
     <style>
         * {
             margin: 0;
@@ -11,217 +11,561 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
         body {
-            background: #1a1a1a;
-            color: #e0e0e0;
-            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2d5a3d 0%, #3d6b4f 50%, #1f3d2e 100%);
+            color: #d9d3c9;
+            font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .slideshow-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            background: linear-gradient(135deg, #3d5a45 0%, #4a6d57 50%, #2f4a38 100%);
+            position: relative;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content {
+            flex: 1;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 40px;
+            z-index: 1;
+        }
+
+        .slide-image img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4), 0 0 50px rgba(139, 111, 71, 0.2);
+            animation: imageFloat 4s ease-in-out infinite;
+            border: 5px solid rgba(217, 211, 201, 0.3);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .slide-image img:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes imageFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .slide h1 {
+            font-size: 78px;
+            color: #8b6f47;
+            margin-bottom: 30px;
+            letter-spacing: 4px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                color: #8b6f47;
+                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+            }
+            50% { 
+                color: #a88a5f;
+                text-shadow: 3px 3px 12px rgba(139, 111, 71, 0.3);
+            }
+        }
+
+        .slide h2 {
+            font-size: 52px;
+            color: #6fa86f;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide p {
+            font-size: 20px;
             line-height: 1.8;
+            color: #d9d3c9;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        .slide strong {
+            color: #a88a5f;
+            font-weight: 700;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 3px solid #D4AF37;
-            padding-bottom: 30px;
+        .slide-subtitle {
+            font-size: 26px;
+            color: #7da86f;
+            letter-spacing: 1.5px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
 
-        h1 {
-            font-size: 48px;
-            color: #D4AF37;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+        .slide-content ul {
+            list-style: none;
+            padding: 0;
         }
 
-        .subtitle {
-            font-size: 16px;
-            color: #b0b0b0;
-            letter-spacing: 1px;
-            font-weight: 300;
+        .slide-content li {
+            font-size: 19px;
+            margin: 18px 0;
+            padding-left: 50px;
+            position: relative;
+            line-height: 1.7;
+            color: #e5dcd1;
+            animation: slideUp 0.7s ease-out backwards;
+            transition: color 0.3s ease;
         }
 
-        .content {
+        .slide-content li:hover {
+            color: #f5f1e8;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-content li:nth-child(1) { animation-delay: 0.2s; }
+        .slide-content li:nth-child(2) { animation-delay: 0.35s; }
+        .slide-content li:nth-child(3) { animation-delay: 0.5s; }
+        .slide-content li:nth-child(4) { animation-delay: 0.65s; }
+
+        .slide-content li:before {
+            content: "🐴";
+            position: absolute;
+            left: 0;
+            font-size: 28px;
+            animation: horseGallop 1.8s ease-in-out infinite;
+        }
+
+        @keyframes horseGallop {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(3px) rotate(1deg); }
+            50% { transform: translateX(6px) rotate(0deg); }
+            75% { transform: translateX(3px) rotate(-1deg); }
+        }
+
+        .info-box {
+            background: rgba(111, 168, 111, 0.15);
+            border-left: 5px solid #6fa86f;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            background: rgba(111, 168, 111, 0.22);
+            border-left-color: #7da86f;
+        }
+
+        .comparison-box {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 25px;
+            margin: 35px 0;
         }
 
-        .section {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-left: 4px solid #D4AF37;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            border-radius: 4px;
+        .comparison-item {
+            background: linear-gradient(135deg, rgba(111, 168, 111, 0.12) 0%, rgba(139, 111, 71, 0.08) 100%);
+            padding: 22px;
+            border-radius: 15px;
+            border: 2px solid rgba(111, 168, 111, 0.25);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .section h2 {
-            font-size: 20px;
-            color: #D4AF37;
+        .comparison-item:hover {
+            background: linear-gradient(135deg, rgba(111, 168, 111, 0.25) 0%, rgba(139, 111, 71, 0.15) 100%);
+            border-color: rgba(111, 168, 111, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(111, 168, 111, 0.15);
+        }
+
+        .comparison-item h3 {
+            color: #7da86f;
             margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 700;
         }
 
-        .section p {
-            font-size: 15px;
-            line-height: 1.8;
-            color: #d0d0d0;
-            margin-bottom: 12px;
+        .slide-counter {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            font-size: 20px;
+            color: #a88a5f;
+            font-weight: 700;
+            background: rgba(139, 111, 71, 0.18);
+            padding: 18px 32px;
+            border-radius: 12px;
+            border: 2px solid rgba(139, 111, 71, 0.4);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
-        .section strong {
-            color: #D4AF37;
-            font-weight: 600;
+        .slide-counter:hover {
+            background: rgba(139, 111, 71, 0.25);
+            border-color: rgba(139, 111, 71, 0.6);
         }
 
-        .full-width {
-            grid-column: 1 / -1;
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 7px;
+            background: linear-gradient(90deg, #6fa86f 0%, #7da86f 50%, #a88a5f 100%);
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 3px 15px rgba(111, 168, 111, 0.4);
         }
 
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 2px solid #D4AF37;
-            color: #888;
-            font-size: 13px;
-            margin-top: 50px;
+        @media (max-width: 1200px) {
+            .slide {
+                flex-direction: column;
+                padding: 40px 50px;
+            }
+
+            .slide-image {
+                padding-left: 0;
+                padding-top: 30px;
+                flex: 0.5;
+            }
+
+            .slide h1 {
+                font-size: 60px;
+            }
+
+            .slide h2 {
+                font-size: 44px;
+            }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 32px;
+            .slide {
+                flex-direction: column;
+                padding: 30px 25px;
             }
 
-            .content {
+            .slide h1 {
+                font-size: 44px;
+                margin-bottom: 15px;
+            }
+
+            .slide h2 {
+                font-size: 36px;
+                margin-bottom: 20px;
+            }
+
+            .slide p {
+                font-size: 16px;
+            }
+
+            .slide-content li {
+                font-size: 16px;
+                margin: 15px 0;
+                padding-left: 40px;
+            }
+
+            .slide-counter {
+                top: 15px;
+                right: 15px;
+                font-size: 16px;
+                padding: 12px 18px;
+            }
+
+            .slide-image img {
+                max-height: 50vh;
+            }
+
+            .comparison-box {
                 grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .section {
-                padding: 20px;
-            }
-
-            .section h2 {
-                font-size: 18px;
-            }
-
-            .section p {
-                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>LE CHEVAL</h1>
-            <p class="subtitle">Un Animal à Travers les Âges</p>
-        </header>
-
-        <div class="content">
-            <!-- INTRODUCTION -->
-            <div class="section">
-                <h2>Introduction</h2>
-                <p>
-                    Le cheval est un animal majestueux qui a toujours fasciné l'humanité. 
-                    Un cheval en mouvement est bien plus qu'une simple créature : c'est la poésie en action.
-                </p>
-                <p>
-                    À travers les âges, cet animal a joué des rôles fondamentaux dans l'histoire de notre civilisation, 
-                    passant de gibier sauvage à compagnon de confiance.
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slideshow-container">
+        <!-- SLIDE 1: TITRE -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1>LE CHEVAL</h1>
+                <p class="slide-subtitle">L'animal qui relie l'homme aux origines</p>
+                <p style="margin-top: 40px; font-size: 22px; color: #FFD700;">
+                    De la proie sauvage au compagnon noble
                 </p>
             </div>
-
-            <!-- ÉTYMOLOGIE -->
-            <div class="section">
-                <h2>Étymologie</h2>
-                <p>
-                    Le mot « cheval » provient du terme gallo-roman « caballus », 
-                    plutôt que du latin classique « equus ».
-                </p>
-                <p>
-                    <strong>À l'origine, caballus désignait un mauvais cheval,</strong> 
-                    un simple animal de trait ou de labeur. Cette étymologie révèle comment 
-                    <strong>l'aspect utilitaire et laborieux</strong> du cheval a marqué nos ancêtres.
-                </p>
-            </div>
-
-            <!-- HISTOIRE PRÉHISTORIQUE -->
-            <div class="section">
-                <h2>Préhistoire et Lascaux</h2>
-                <p>
-                    Il y a environ 15 000 ans, sur les parois de la Grotte de Lascaux, 
-                    <strong>apparaissent les premiers dessins de chevaux.</strong>
-                </p>
-                <p>
-                    À cette époque, le cheval était avant tout une proie, un gibier chassé pour sa viande. 
-                    Cependant, le soin exceptionnel accordé à ces peintures révèle une 
-                    <strong>fascination mêlée de crainte</strong> pour cette force brute et indomptable.
-                </p>
-            </div>
-
-            <!-- MYTHOLOGIE & LÉGENDES -->
-            <div class="section">
-                <h2>Mythologie et Légendes</h2>
-                <p>
-                    <strong>En Grèce Antique :</strong> Pégase, le cheval ailé, incarne l'allié noble et divin. 
-                    Bellérophon s'en sert pour vaincre la Chimère.
-                </p>
-                <p>
-                    <strong>En Écosse Médiévale :</strong> Le Kelpie, un esprit démoniaque sous forme de cheval noir, 
-                    attire les voyageurs pour les dévorer dans les lacs. Ces contrastes reflètent les cultures différentes 
-                    et leurs rapports à la nature.
-                </p>
-            </div>
-
-            <!-- MOYEN-AGE -->
-            <div class="section">
-                <h2>Le Moyen-Âge</h2>
-                <p>
-                    Le cheval change radicalement de statut et devient le redoutable « destrier » des chevaliers. 
-                    <strong>Il incarne loyauté et bravoure au combat.</strong>
-                </p>
-                <p>
-                    C'est une rupture totale avec la Préhistoire. <strong>Le cheval devient l'instrument noble 
-                    du triomphe du Bien sur le Mal,</strong> incarnant les valeurs chevaleresques de l'époque.
-                </p>
-            </div>
-
-            <!-- ÉPOQUE MODERNE -->
-            <div class="section">
-                <h2>Époque Contemporaine</h2>
-                <p>
-                    Aujourd'hui, <strong>le cheval est un compagnon de sport et de loisir,</strong> 
-                    et même un véritable thérapeute grâce à sa sensibilité émotionnelle.
-                </p>
-                <p>
-                    Des films comme « Cheval de Guerre » ou des romans comme « L'Homme qui chuchotait à l'oreille des chevaux » 
-                    célèbrent ce lien profond. Néanmoins, dans de nombreux pays, 
-                    <strong>le cheval reste un outil vital pour l'agriculture.</strong>
-                </p>
-            </div>
-
-            <!-- CONCLUSION -->
-            <div class="section full-width">
-                <h2>Conclusion</h2>
-                <p>
-                    <strong>Le cheval n'est pas simplement un animal : c'est le miroir de l'évolution humaine.</strong> 
-                    D'une proie sauvage chassée pour survivre, il est devenu une arme de guerre, 
-                    un symbole de pouvoir, puis un compagnon respecté et sensible.
-                </p>
-                <p>
-                    À travers les millénaires, une seule chose n'a jamais changé : 
-                    <strong>la fascination intemporelle que cet animal exerce sur le cœur des hommes.</strong>
-                </p>
+            <div class="slide-image">
+                <img src="image1.jpg" alt="Cheval majestueux">
             </div>
         </div>
 
-        <footer>
-            <p>Une présentation classique sur le cheval, son histoire et son évolution à travers les civilisations</p>
-        </footer>
+        <!-- SLIDE 2: I. PRÉSENTATION DE L'ANIMAL -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>I. Présentation de l'Animal</h2>
+                <p style="text-align: center; font-size: 32px; color: #D4AF37; margin-bottom: 30px;">
+                    Étymologie : <strong>CABALLUS</strong>
+                </p>
+                <ul style="margin-bottom: 30px;">
+                    <li><strong>Origine gallo-romaine</strong> : mauvais cheval, animal de trait</li>
+                    <li><strong>Sens premier</strong> : labeur, utilité</li>
+                </ul>
+
+                <p style="text-align: center; font-size: 24px; color: #D4AF37; margin-bottom: 20px; margin-top: 40px;">
+                    ✦ Premières représentations ✦
+                </p>
+                <ul>
+                    <li><strong>Lascaux (Préhistoire, 15 000 ans)</strong> - Europe</li>
+                    <li><strong>Interprétation</strong> : proie fascinante, force indomptable</li>
+                    <li><strong>Lien émotionnel</strong> : crainte mêlée d'admiration</li>
+                </ul>
+            </div>
+            <div class="slide-image">
+                <img src="image2.jpg" alt="Peintures de Lascaux">
+            </div>
+        </div>
+
+        <!-- SLIDE 3: II. CONTES ET LÉGENDES -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>II. Contes et Légendes du Monde</h2>
+                <p style="text-align: center; font-size: 26px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
+                    Pégase vs Kelpie
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h3>🕊️ PÉGASE (Grèce Antique)</h3>
+                        <ul style="font-size: 17px;">
+                            <li><strong>Qui</strong> : cheval ailé divin</li>
+                            <li><strong>Quoi</strong> : aide à vaincre la Chimère</li>
+                            <li><strong>Pourquoi</strong> : <span style="color: #FFD700;">Allié noble</span></li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>🌑 KELPIE (Folklore Écossais)</h3>
+                        <ul style="font-size: 17px;">
+                            <li><strong>Qui</strong> : esprit démoniaque noir</li>
+                            <li><strong>Quoi</strong> : attire et dévore les voyageurs</li>
+                            <li><strong>Pourquoi</strong> : <span style="color: #FFD700;">Menace, chaos</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px; text-align: center; font-size: 18px; color: #b0b0b0; font-weight: bold;">
+                    ↓ Cultures différentes = Perceptions inverses ↓
+                </p>
+            </div>
+            <div class="slide-image">
+                <img src="image3.jpg" alt="Pégase mythologie">
+            </div>
+        </div>
+
+        <!-- SLIDE 4: III. LE MOYEN-ÂGE -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>III. L'Animal au Moyen-Âge</h2>
+                <p style="text-align: center; font-size: 28px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
+                    Le Destrier Chevaleresque ⚔️
+                </p>
+
+                <ul style="margin-bottom: 30px; font-size: 18px;">
+                    <li><strong>Cheval de guerre</strong> : loyauté, bravoure, noblesse</li>
+                    <li><strong>Rupture avec Lascaux</strong> : de proie à compagnon valorisé</li>
+                    <li><strong>Symbole chrétien</strong> : instrument du Bien</li>
+                </ul>
+
+                <div class="info-box">
+                    <p><strong>📖 Bestiaire du Moyen-Âge</strong></p>
+                    <ul style="margin-top: 15px; font-size: 17px;">
+                        <li><strong>Vision religieuse</strong> : cheval = fidélité divine</li>
+                        <li><strong>Reflet du chevalier</strong> : statut social, honneur</li>
+                        <li><strong>Continuité ?</strong> <span style="color: #FFD700;">OUI + RÉVOLUTION</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-image">
+                <img src="image4.jpg" alt="Chevalier médiéval">
+            </div>
+        </div>
+
+        <!-- SLIDE 5: IV. L'ANIMAL AUJOURD'HUI -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>IV. L'Animal Aujourd'hui</h2>
+                <p style="text-align: center; font-size: 26px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
+                    Perception Contemporaine
+                </p>
+
+                <ul style="margin-bottom: 30px; font-size: 18px;">
+                    <li><strong>Sport & Loisir</strong> : équitation, compétitions</li>
+                    <li><strong>Thérapie émotionnelle</strong> : hippothérapie, connexion affective</li>
+                </ul>
+
+                <div class="info-box">
+                    <p><strong>✦ Exemples Culturels ✦</strong></p>
+                    <ul style="margin-top: 15px; font-size: 17px;">
+                        <li><strong>« Cheval de Guerre »</strong> (Spielberg, 2011) : lien homme-animal en guerre</li>
+                        <li><strong>« L'Homme qui chuchotait »</strong> (Evans, 1998) : communication instinctive</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 25px; font-size: 17px; color: #FFD700; font-weight: bold;">
+                    ⚠ Exception mondiale : agriculture, travail (pays pauvres)
+                </p>
+            </div>
+            <div class="slide-image">
+                <img src="image5.jpg" alt="Thérapie équestre">
+            </div>
+        </div>
+
+        <!-- SLIDE 6: CONCLUSION -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Conclusion</h2>
+                <p style="font-size: 28px; color: #D4AF37; margin-bottom: 35px; font-weight: bold;">
+                    Synthèse : Le Cheval, Miroir de l'Humanité
+                </p>
+
+                <ul style="font-size: 18px; line-height: 2.2;">
+                    <li style="margin-bottom: 15px;"><strong>Préhistoire</strong> : fascination + crainte</li>
+                    <li style="margin-bottom: 15px;"><strong>Légendes</strong> : allié divin ou démon</li>
+                    <li style="margin-bottom: 15px;"><strong>Moyen-Âge</strong> : noblesse, chevalerie chrétienne</li>
+                    <li style="margin-bottom: 15px;"><strong>Aujourd'hui</strong> : compagnon émotionnel</li>
+                </ul>
+
+                <p style="margin-top: 40px; font-size: 22px; color: #D4AF37; font-style: italic; font-weight: bold; text-align: center;">
+                    ↓ Un lien constant ↓<br>
+                    <span style="font-size: 20px; color: #FFD700;">Affection • Pouvoir • Spiritualité</span>
+                </p>
+            </div>
+            <div class="slide-image">
+                <img src="image6.jpg" alt="Coucher soleil cheval">
+            </div>
+        </div>
     </div>
+
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">6</span>
+    </div>
+
+
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) {
+                currentSlide = totalSlides;
+            }
+            if (n < 1) {
+                currentSlide = 1;
+            }
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide;
+            
+            // Update progress bar
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
 </body>
 </html>
