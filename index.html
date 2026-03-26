@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LE CHEVAL - Présentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid #D4AF37;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #D4AF37;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #b0b0b0;
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-left: 4px solid #D4AF37;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border-radius: 4px;
+        }
+
+        .section h2 {
+            font-size: 20px;
+            color: #D4AF37;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #d0d0d0;
+            margin-bottom: 12px;
+        }
+
+        .section strong {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 2px solid #D4AF37;
+            color: #888;
+            font-size: 13px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .section h2 {
+                font-size: 18px;
+            }
+
+            .section p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LE CHEVAL</h1>
+            <p class="subtitle">Un Animal à Travers les Âges</p>
+        </header>
+
+        <div class="content">
+            <!-- INTRODUCTION -->
+            <div class="section">
+                <h2>Introduction</h2>
+                <p>
+                    Le cheval est un animal majestueux qui a toujours fasciné l'humanité. 
+                    Un cheval en mouvement est bien plus qu'une simple créature : c'est la poésie en action.
+                </p>
+                <p>
+                    À travers les âges, cet animal a joué des rôles fondamentaux dans l'histoire de notre civilisation, 
+                    passant de gibier sauvage à compagnon de confiance.
+                </p>
+            </div>
+
+            <!-- ÉTYMOLOGIE -->
+            <div class="section">
+                <h2>Étymologie</h2>
+                <p>
+                    Le mot « cheval » provient du terme gallo-roman « caballus », 
+                    plutôt que du latin classique « equus ».
+                </p>
+                <p>
+                    <strong>À l'origine, caballus désignait un mauvais cheval,</strong> 
+                    un simple animal de trait ou de labeur. Cette étymologie révèle comment 
+                    <strong>l'aspect utilitaire et laborieux</strong> du cheval a marqué nos ancêtres.
+                </p>
+            </div>
+
+            <!-- HISTOIRE PRÉHISTORIQUE -->
+            <div class="section">
+                <h2>Préhistoire et Lascaux</h2>
+                <p>
+                    Il y a environ 15 000 ans, sur les parois de la Grotte de Lascaux, 
+                    <strong>apparaissent les premiers dessins de chevaux.</strong>
+                </p>
+                <p>
+                    À cette époque, le cheval était avant tout une proie, un gibier chassé pour sa viande. 
+                    Cependant, le soin exceptionnel accordé à ces peintures révèle une 
+                    <strong>fascination mêlée de crainte</strong> pour cette force brute et indomptable.
+                </p>
+            </div>
+
+            <!-- MYTHOLOGIE & LÉGENDES -->
+            <div class="section">
+                <h2>Mythologie et Légendes</h2>
+                <p>
+                    <strong>En Grèce Antique :</strong> Pégase, le cheval ailé, incarne l'allié noble et divin. 
+                    Bellérophon s'en sert pour vaincre la Chimère.
+                </p>
+                <p>
+                    <strong>En Écosse Médiévale :</strong> Le Kelpie, un esprit démoniaque sous forme de cheval noir, 
+                    attire les voyageurs pour les dévorer dans les lacs. Ces contrastes reflètent les cultures différentes 
+                    et leurs rapports à la nature.
+                </p>
+            </div>
+
+            <!-- MOYEN-AGE -->
+            <div class="section">
+                <h2>Le Moyen-Âge</h2>
+                <p>
+                    Le cheval change radicalement de statut et devient le redoutable « destrier » des chevaliers. 
+                    <strong>Il incarne loyauté et bravoure au combat.</strong>
+                </p>
+                <p>
+                    C'est une rupture totale avec la Préhistoire. <strong>Le cheval devient l'instrument noble 
+                    du triomphe du Bien sur le Mal,</strong> incarnant les valeurs chevaleresques de l'époque.
+                </p>
+            </div>
+
+            <!-- ÉPOQUE MODERNE -->
+            <div class="section">
+                <h2>Époque Contemporaine</h2>
+                <p>
+                    Aujourd'hui, <strong>le cheval est un compagnon de sport et de loisir,</strong> 
+                    et même un véritable thérapeute grâce à sa sensibilité émotionnelle.
+                </p>
+                <p>
+                    Des films comme « Cheval de Guerre » ou des romans comme « L'Homme qui chuchotait à l'oreille des chevaux » 
+                    célèbrent ce lien profond. Néanmoins, dans de nombreux pays, 
+                    <strong>le cheval reste un outil vital pour l'agriculture.</strong>
+                </p>
+            </div>
+
+            <!-- CONCLUSION -->
+            <div class="section full-width">
+                <h2>Conclusion</h2>
+                <p>
+                    <strong>Le cheval n'est pas simplement un animal : c'est le miroir de l'évolution humaine.</strong> 
+                    D'une proie sauvage chassée pour survivre, il est devenu une arme de guerre, 
+                    un symbole de pouvoir, puis un compagnon respecté et sensible.
+                </p>
+                <p>
+                    À travers les millénaires, une seule chose n'a jamais changé : 
+                    <strong>la fascination intemporelle que cet animal exerce sur le cœur des hommes.</strong>
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Une présentation classique sur le cheval, son histoire et son évolution à travers les civilisations</p>
+        </footer>
+    </div>
+</body>
+</html>
