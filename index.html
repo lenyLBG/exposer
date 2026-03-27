@@ -17,9 +17,9 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a3d2a 0%, #2d5a3d 25%, #3d6b4f 50%, #2d5a3d 75%, #1f3d2e 100%);
+            background: linear-gradient(135deg, #0f2818 0%, #1a3d2a 15%, #2d5a3d 30%, #3d6b4f 50%, #2d5a3d 70%, #1a3d2a 85%, #0f2818 100%);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 20s ease infinite;
             color: #d9d3c9;
             font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
             display: flex;
@@ -27,11 +27,29 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(125, 218, 143, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(61, 90, 69, 0.02) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
+            25% { background-position: 50% 50%; }
             50% { background-position: 100% 50%; }
+            75% { background-position: 50% 50%; }
             100% { background-position: 0% 50%; }
         }
 
@@ -46,15 +64,20 @@
             width: 100%;
             height: 100%;
             padding: 60px 80px;
-            background: linear-gradient(135deg, rgba(61, 90, 69, 0.9) 0%, rgba(74, 109, 87, 0.9) 50%, rgba(47, 74, 56, 0.9) 100%),
-                        radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.15) 0%, transparent 50%);
+            background: 
+                linear-gradient(135deg, rgba(61, 90, 69, 0.92) 0%, rgba(74, 109, 87, 0.92) 50%, rgba(47, 74, 56, 0.92) 100%),
+                radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(125, 218, 143, 0.08) 0%, transparent 50%);
             position: relative;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            animation: slideInAdvanced 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideInAdvanced 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             overflow: hidden;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(3px);
+            box-shadow: 
+                inset 0 -1px 40px rgba(0, 0, 0, 0.3),
+                0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .slide::before {
@@ -140,22 +163,29 @@
         .slide-image img {
             max-width: 100%;
             max-height: 90vh;
-            border-radius: 30px;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5), 
-                        0 0 80px rgba(139, 111, 71, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-radius: 35px;
+            box-shadow: 
+                0 50px 120px rgba(0, 0, 0, 0.6), 
+                0 0 100px rgba(139, 111, 71, 0.4),
+                0 0 150px rgba(125, 218, 143, 0.2),
+                inset 0 2px 10px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 20px rgba(0, 0, 0, 0.3);
             animation: imageFloat 5s ease-in-out infinite;
-            border: 8px solid rgba(217, 211, 201, 0.4);
+            border: 10px solid;
+            border-image: linear-gradient(135deg, rgba(217, 211, 201, 0.6), rgba(255, 215, 0, 0.3), rgba(125, 218, 143, 0.4)) 1;
             backdrop-filter: blur(10px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            filter: brightness(1.05) contrast(1.1);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: brightness(1.08) contrast(1.15) saturate(1.1);
         }
 
         .slide-image img:hover {
-            transform: scale(1.05) translateY(-10px);
-            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6), 
-                        0 0 100px rgba(139, 111, 71, 0.4);
-            filter: brightness(1.15) contrast(1.2);
+            transform: scale(1.08) translateY(-15px) rotate(-1deg);
+            box-shadow: 
+                0 60px 150px rgba(0, 0, 0, 0.7), 
+                0 0 120px rgba(139, 111, 71, 0.5),
+                0 0 180px rgba(125, 218, 143, 0.3),
+                0 0 220px rgba(255, 215, 0, 0.2);
+            filter: brightness(1.2) contrast(1.25) saturate(1.2);
         }
 
         @keyframes imageFloat {
@@ -167,24 +197,36 @@
             font-size: 78px;
             color: #FFD700;
             margin-bottom: 30px;
-            letter-spacing: 5px;
-            font-weight: 800;
-            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6),
-                         0 0 30px rgba(255, 215, 0, 0.4);
+            letter-spacing: 6px;
+            font-weight: 900;
+            text-shadow: 
+                4px 4px 20px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(255, 215, 0, 0.5),
+                0 0 80px rgba(255, 215, 0, 0.2),
+                -2px -2px 10px rgba(255, 237, 78, 0.3);
             animation: titleGlowAdvanced 4s ease-in-out infinite;
             text-transform: uppercase;
+            font-family: Georgia, serif;
+            letter-spacing: 8px;
         }
 
         @keyframes titleGlowAdvanced {
             0%, 100% { 
                 color: #FFD700;
-                text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
+                text-shadow: 
+                    4px 4px 20px rgba(0, 0, 0, 0.8),
+                    0 0 40px rgba(255, 215, 0, 0.5),
+                    0 0 80px rgba(255, 215, 0, 0.2);
                 transform: translateY(0);
             }
             50% { 
                 color: #FFED4E;
-                text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.6);
-                transform: translateY(-3px);
+                text-shadow: 
+                    6px 6px 30px rgba(0, 0, 0, 0.9),
+                    0 0 60px rgba(255, 215, 0, 0.8),
+                    0 0 120px rgba(255, 215, 0, 0.5),
+                    0 0 150px rgba(255, 237, 78, 0.3);
+                transform: translateY(-4px);
             }
         }
 
@@ -192,11 +234,15 @@
             font-size: 52px;
             color: #7DDA8F;
             margin-bottom: 40px;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             font-weight: 800;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5),
-                         0 0 25px rgba(125, 218, 143, 0.3);
+            text-shadow: 
+                4px 4px 15px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(125, 218, 143, 0.4),
+                0 0 60px rgba(125, 218, 143, 0.15);
             animation: slideDownIn 0.8s ease-out;
+            font-family: 'Trebuchet MS', sans-serif;
+            letter-spacing: 5px;
         }
 
         @keyframes slideDownIn {
@@ -212,16 +258,18 @@
 
         .slide p {
             font-size: 20px;
-            line-height: 1.9;
+            line-height: 2;
             color: #f0e6d9;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 22px;
+            text-shadow: 
+                2px 2px 6px rgba(0, 0, 0, 0.4),
+                0 0 10px rgba(125, 218, 143, 0.1);
             animation: fadeInUp 0.9s ease-out backwards;
         }
 
-        .slide p:nth-of-type(1) { animation-delay: 0.2s; }
-        .slide p:nth-of-type(2) { animation-delay: 0.3s; }
-        .slide p:nth-of-type(3) { animation-delay: 0.4s; }
+        .slide p:nth-of-type(1) { animation-delay: 0.25s; }
+        .slide p:nth-of-type(2) { animation-delay: 0.4s; }
+        .slide p:nth-of-type(3) { animation-delay: 0.55s; }
 
         @keyframes fadeInUp {
             from {
@@ -246,13 +294,22 @@
             letter-spacing: 2px;
             font-weight: 600;
             margin-bottom: 40px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            animation: subtitlePulse 2s ease-in-out infinite;
+            text-shadow: 
+                3px 3px 10px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(125, 218, 143, 0.2);
+            animation: subtitlePulse 2.5s ease-in-out infinite;
+            font-style: italic;
         }
 
         @keyframes subtitlePulse {
-            0%, 100% { opacity: 0.9; }
-            50% { opacity: 1; }
+            0%, 100% { 
+                opacity: 0.85;
+                transform: translateY(0);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateY(-2px);
+            }
         }
 
         .slide-content ul {
@@ -262,25 +319,30 @@
 
         .slide-content li {
             font-size: 19px;
-            margin: 20px 0;
-            padding-left: 55px;
+            margin: 22px 0;
+            padding-left: 25px;
             position: relative;
-            line-height: 1.8;
+            line-height: 1.9;
             color: #f0e6d9;
             animation: slideUp 0.8s ease-out backwards;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-left: 3px solid rgba(125, 218, 143, 0.3);
-            padding-left: 20px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-left: 4px solid rgba(125, 218, 143, 0.3);
             margin-left: 20px;
             cursor: pointer;
+            padding-left: 25px;
         }
 
         .slide-content li:hover {
             color: #FFED4E;
             border-left-color: #FFED4E;
-            margin-left: 30px;
-            transform: translateX(10px);
-            text-shadow: 0 0 10px rgba(255, 237, 78, 0.3);
+            margin-left: 35px;
+            transform: translateX(15px);
+            text-shadow: 
+                0 0 10px rgba(255, 237, 78, 0.5),
+                0 0 20px rgba(255, 237, 78, 0.2);
+            background: linear-gradient(90deg, rgba(255, 237, 78, 0.1) 0%, transparent 100%);
+            padding: 8px 15px;
+            border-radius: 8px;
         }
 
         @keyframes slideUp {
@@ -317,16 +379,39 @@
         }
 
         .info-box {
-            background: linear-gradient(135deg, rgba(125, 218, 143, 0.25) 0%, rgba(139, 111, 71, 0.15) 100%);
-            border-left: 6px solid #7DDA8F;
-            border-radius: 20px;
-            padding: 30px;
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.3) 0%, rgba(139, 111, 71, 0.2) 100%);
+            border-left: 8px solid #7DDA8F;
+            border-radius: 25px;
+            padding: 35px;
             margin: 30px 0;
-            backdrop-filter: blur(15px);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 40px rgba(125, 218, 143, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 15px 50px rgba(125, 218, 143, 0.2),
+                inset 0 1px 15px rgba(255, 255, 255, 0.25),
+                inset -1px 0 15px rgba(0, 0, 0, 0.1);
             animation: boxSlideIn 0.9s ease-out backwards;
+            border: 1px solid rgba(125, 218, 143, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
         }
 
         @keyframes boxSlideIn {
@@ -341,11 +426,13 @@
         }
 
         .info-box:hover {
-            background: linear-gradient(135deg, rgba(125, 218, 143, 0.35) 0%, rgba(139, 111, 71, 0.25) 100%);
-            border-left-color: #9FDB9F;
-            transform: translateX(10px);
-            box-shadow: 0 20px 60px rgba(125, 218, 143, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.45) 0%, rgba(139, 111, 71, 0.3) 100%);
+            border-left-color: #FFED4E;
+            transform: translateX(12px);
+            box-shadow: 
+                0 25px 80px rgba(125, 218, 143, 0.35),
+                inset 0 1px 15px rgba(255, 255, 255, 0.3),
+                inset -1px 0 15px rgba(0, 0, 0, 0.15);
         }
 
         .info-box p {
@@ -375,16 +462,40 @@
         }
 
         .comparison-item {
-            background: linear-gradient(135deg, rgba(125, 218, 143, 0.2) 0%, rgba(255, 237, 78, 0.1) 100%);
-            padding: 28px;
-            border-radius: 25px;
-            border: 3px solid rgba(125, 218, 143, 0.4);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.28) 0%, rgba(255, 237, 78, 0.12) 100%);
+            padding: 32px;
+            border-radius: 30px;
+            border: 2px solid rgba(125, 218, 143, 0.5);
+            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.25),
+                inset 0 1px 20px rgba(255, 255, 255, 0.25),
+                inset -1px 0 20px rgba(0, 0, 0, 0.1);
             animation: itemFloatIn 0.8s ease-out backwards;
             position: relative;
             overflow: hidden;
+        }
+
+        .comparison-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 237, 78, 0.15) 0%, transparent 70%);
+            animation: orbSmall 10s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .comparison-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+            opacity: 0;
+            animation: shimmerDiag 3s infinite;
+            pointer-events: none;
         }
 
         @keyframes itemFloatIn {
@@ -401,29 +512,19 @@
         .comparison-item:nth-child(1) { animation-delay: 0.3s; }
         .comparison-item:nth-child(2) { animation-delay: 0.5s; }
 
-        .comparison-item:hover {
-            background: linear-gradient(135deg, rgba(125, 218, 143, 0.35) 0%, rgba(255, 237, 78, 0.2) 100%);
-            border-color: rgba(255, 237, 78, 0.7);
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 35px 80px rgba(125, 218, 143, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .comparison-item::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 237, 78, 0.1) 0%, transparent 70%);
-            animation: orbSmall 8s ease-in-out infinite;
-            pointer-events: none;
-        }
-
         @keyframes orbSmall {
             0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
+            50% { transform: translate(25px, 25px); }
+        }
+
+        .comparison-item:hover {
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.4) 0%, rgba(255, 237, 78, 0.25) 100%);
+            border-color: rgba(255, 237, 78, 0.8);
+            transform: translateY(-20px) scale(1.03);
+            box-shadow: 
+                0 40px 100px rgba(125, 218, 143, 0.35),
+                inset 0 1px 20px rgba(255, 255, 255, 0.35),
+                inset -1px 0 20px rgba(0, 0, 0, 0.15);
         }
 
         .comparison-item h3 {
@@ -458,37 +559,53 @@
             position: fixed;
             top: 40px;
             right: 40px;
-            font-size: 22px;
+            font-size: 24px;
             color: #FFED4E;
-            font-weight: 800;
-            background: linear-gradient(135deg, rgba(139, 111, 71, 0.35) 0%, rgba(125, 218, 143, 0.15) 100%);
-            padding: 20px 35px;
-            border-radius: 20px;
-            border: 3px solid rgba(139, 111, 71, 0.6);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+            font-weight: 900;
+            background: linear-gradient(135deg, rgba(139, 111, 71, 0.4) 0%, rgba(125, 218, 143, 0.2) 100%);
+            padding: 22px 40px;
+            border-radius: 25px;
+            border: 3px solid rgba(139, 111, 71, 0.8);
+            backdrop-filter: blur(25px);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.4),
+                inset 0 1px 15px rgba(255, 255, 255, 0.25),
+                inset -1px 0 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-shadow: 
+                2px 2px 8px rgba(0, 0, 0, 0.6),
+                0 0 15px rgba(255, 215, 0, 0.3);
         }
 
         .slide-counter:hover {
-            background: linear-gradient(135deg, rgba(139, 111, 71, 0.5) 0%, rgba(125, 218, 143, 0.25) 100%);
+            background: linear-gradient(135deg, rgba(139, 111, 71, 0.6) 0%, rgba(125, 218, 143, 0.35) 100%);
             border-color: #FFED4E;
-            transform: scale(1.08);
-            box-shadow: 0 20px 60px rgba(255, 237, 78, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: scale(1.12);
+            box-shadow: 
+                0 30px 80px rgba(255, 237, 78, 0.3),
+                inset 0 1px 15px rgba(255, 255, 255, 0.35),
+                0 0 30px rgba(255, 215, 0, 0.4);
         }
 
         .progress-bar {
             position: fixed;
             top: 0;
             left: 0;
-            height: 10px;
-            background: linear-gradient(90deg, #7DDA8F 0%, #9FDB9F 25%, #FFD700 50%, #FFED4E 100%);
+            height: 12px;
+            background: linear-gradient(90deg, #7DDA8F 0%, #9FDB9F 20%, #FFD700 50%, #FFED4E 80%, #7DDA8F 100%);
+            background-size: 200% 100%;
+            animation: progressGradient 3s ease infinite, width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 5px 25px rgba(125, 218, 143, 0.6),
-                        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 8px 30px rgba(125, 218, 143, 0.7),
+                inset 0 -1px 10px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes progressGradient {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 0%; }
+            100% { background-position: 0% 0%; }
         }
 
         /* Navigation Controls */
@@ -503,33 +620,38 @@
         }
 
         .nav-btn {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(125, 218, 143, 0.3) 0%, rgba(139, 111, 71, 0.2) 100%);
-            border: 3px solid rgba(125, 218, 143, 0.6);
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.35) 0%, rgba(139, 111, 71, 0.25) 100%);
+            border: 3px solid rgba(125, 218, 143, 0.7);
             color: #FFED4E;
-            font-size: 28px;
+            font-size: 32px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 15px rgba(255, 255, 255, 0.25),
+                inset -1px 0 15px rgba(0, 0, 0, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
         }
 
         .nav-btn:hover {
-            background: linear-gradient(135deg, rgba(125, 218, 143, 0.5) 0%, rgba(255, 237, 78, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.5) 0%, rgba(255, 237, 78, 0.25) 100%);
             border-color: #FFED4E;
-            transform: scale(1.15) translateY(-5px);
-            box-shadow: 0 20px 50px rgba(125, 218, 143, 0.4),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: scale(1.2) translateY(-8px);
+            box-shadow: 
+                0 30px 70px rgba(125, 218, 143, 0.5),
+                inset 0 1px 15px rgba(255, 255, 255, 0.33),
+                0 0 40px rgba(255, 215, 0, 0.3);
         }
 
         .nav-btn:active {
-            transform: scale(0.95) translateY(-2px);
+            transform: scale(0.92) translateY(-3px);
         }
 
         @media (max-width: 1200px) {
