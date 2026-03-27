@@ -17,7 +17,9 @@
         }
 
         body {
-            background: linear-gradient(135deg, #2d5a3d 0%, #3d6b4f 50%, #1f3d2e 100%);
+            background: linear-gradient(135deg, #1a3d2a 0%, #2d5a3d 25%, #3d6b4f 50%, #2d5a3d 75%, #1f3d2e 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             color: #d9d3c9;
             font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
             display: flex;
@@ -25,6 +27,12 @@
             align-items: center;
             overflow: hidden;
             margin: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .slideshow-container {
@@ -38,48 +46,74 @@
             width: 100%;
             height: 100%;
             padding: 60px 80px;
-            background: linear-gradient(135deg, #3d5a45 0%, #4a6d57 50%, #2f4a38 100%);
+            background: linear-gradient(135deg, rgba(61, 90, 69, 0.9) 0%, rgba(74, 109, 87, 0.9) 50%, rgba(47, 74, 56, 0.9) 100%),
+                        radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.15) 0%, transparent 50%);
             position: relative;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            animation: slideIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideInAdvanced 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden;
+            backdrop-filter: blur(2px);
         }
 
         .slide::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.08) 0%, transparent 50%);
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(107, 174, 107, 0.05) 0%, transparent 70%);
+            animation: orb 20s ease-in-out infinite;
             pointer-events: none;
             z-index: 0;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes orb {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        @keyframes slideInAdvanced {
+            from {
+                opacity: 0;
+                transform: translateX(100px) rotate(1deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
         }
 
         .slide.active {
             display: flex;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
         .slide-content {
             flex: 1;
-            z-index: 1;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            animation: contentFadeIn 1.5s ease-out;
+        }
+
+        @keyframes contentFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .slide-image {
@@ -88,79 +122,137 @@
             justify-content: center;
             align-items: center;
             padding-left: 40px;
-            z-index: 1;
+            z-index: 2;
+            animation: imageReveal 1.3s ease-out;
+        }
+
+        @keyframes imageReveal {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .slide-image img {
             max-width: 100%;
             max-height: 90vh;
-            border-radius: 20px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4), 0 0 50px rgba(139, 111, 71, 0.2);
-            animation: imageFloat 4s ease-in-out infinite;
-            border: 5px solid rgba(217, 211, 201, 0.3);
+            border-radius: 30px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5), 
+                        0 0 80px rgba(139, 111, 71, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            animation: imageFloat 5s ease-in-out infinite;
+            border: 8px solid rgba(217, 211, 201, 0.4);
             backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: brightness(1.05) contrast(1.1);
         }
 
         .slide-image img:hover {
-            transform: scale(1.02);
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6), 
+                        0 0 100px rgba(139, 111, 71, 0.4);
+            filter: brightness(1.15) contrast(1.2);
         }
 
         @keyframes imageFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-25px); }
         }
 
         .slide h1 {
             font-size: 78px;
-            color: #8b6f47;
+            color: #FFD700;
             margin-bottom: 30px;
-            letter-spacing: 4px;
-            font-weight: 700;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
-            animation: titleGlow 3s ease-in-out infinite;
+            letter-spacing: 5px;
+            font-weight: 800;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6),
+                         0 0 30px rgba(255, 215, 0, 0.4);
+            animation: titleGlowAdvanced 4s ease-in-out infinite;
+            text-transform: uppercase;
         }
 
-        @keyframes titleGlow {
+        @keyframes titleGlowAdvanced {
             0%, 100% { 
-                color: #8b6f47;
-                text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+                color: #FFD700;
+                text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
+                transform: translateY(0);
             }
             50% { 
-                color: #a88a5f;
-                text-shadow: 3px 3px 12px rgba(139, 111, 71, 0.3);
+                color: #FFED4E;
+                text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 215, 0, 0.6);
+                transform: translateY(-3px);
             }
         }
 
         .slide h2 {
             font-size: 52px;
-            color: #6fa86f;
+            color: #7DDA8F;
             margin-bottom: 40px;
-            letter-spacing: 2px;
-            font-weight: 700;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+            letter-spacing: 3px;
+            font-weight: 800;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5),
+                         0 0 25px rgba(125, 218, 143, 0.3);
+            animation: slideDownIn 0.8s ease-out;
+        }
+
+        @keyframes slideDownIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .slide p {
             font-size: 20px;
-            line-height: 1.8;
-            color: #d9d3c9;
+            line-height: 1.9;
+            color: #f0e6d9;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.9s ease-out backwards;
+        }
+
+        .slide p:nth-of-type(1) { animation-delay: 0.2s; }
+        .slide p:nth-of-type(2) { animation-delay: 0.3s; }
+        .slide p:nth-of-type(3) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .slide strong {
-            color: #a88a5f;
-            font-weight: 700;
+            color: #FFED4E;
+            font-weight: 800;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         .slide-subtitle {
             font-size: 26px;
-            color: #7da86f;
-            letter-spacing: 1.5px;
-            font-weight: 400;
+            color: #9FDB9F;
+            letter-spacing: 2px;
+            font-weight: 600;
             margin-bottom: 40px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            animation: subtitlePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes subtitlePulse {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
         }
 
         .slide-content ul {
@@ -170,17 +262,25 @@
 
         .slide-content li {
             font-size: 19px;
-            margin: 18px 0;
-            padding-left: 50px;
+            margin: 20px 0;
+            padding-left: 55px;
             position: relative;
-            line-height: 1.7;
-            color: #e5dcd1;
-            animation: slideUp 0.7s ease-out backwards;
-            transition: color 0.3s ease;
+            line-height: 1.8;
+            color: #f0e6d9;
+            animation: slideUp 0.8s ease-out backwards;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-left: 3px solid rgba(125, 218, 143, 0.3);
+            padding-left: 20px;
+            margin-left: 20px;
+            cursor: pointer;
         }
 
         .slide-content li:hover {
-            color: #f5f1e8;
+            color: #FFED4E;
+            border-left-color: #FFED4E;
+            margin-left: 30px;
+            transform: translateX(10px);
+            text-shadow: 0 0 10px rgba(255, 237, 78, 0.3);
         }
 
         @keyframes slideUp {
@@ -194,99 +294,242 @@
             }
         }
 
-        .slide-content li:nth-child(1) { animation-delay: 0.2s; }
-        .slide-content li:nth-child(2) { animation-delay: 0.35s; }
-        .slide-content li:nth-child(3) { animation-delay: 0.5s; }
-        .slide-content li:nth-child(4) { animation-delay: 0.65s; }
+        .slide-content li:nth-child(1) { animation-delay: 0.3s; }
+        .slide-content li:nth-child(2) { animation-delay: 0.45s; }
+        .slide-content li:nth-child(3) { animation-delay: 0.6s; }
+        .slide-content li:nth-child(4) { animation-delay: 0.75s; }
+        .slide-content li:nth-child(5) { animation-delay: 0.9s; }
 
         .slide-content li:before {
             content: "🐴";
             position: absolute;
             left: 0;
-            font-size: 28px;
-            animation: horseGallop 1.8s ease-in-out infinite;
+            font-size: 32px;
+            animation: horseGallopAdvanced 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
-        @keyframes horseGallop {
-            0%, 100% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(3px) rotate(1deg); }
-            50% { transform: translateX(6px) rotate(0deg); }
-            75% { transform: translateX(3px) rotate(-1deg); }
+        @keyframes horseGallopAdvanced {
+            0%, 100% { transform: translateX(0) scaleX(1) rotate(0deg); }
+            25% { transform: translateX(5px) scaleX(1.1) rotate(1deg); }
+            50% { transform: translateX(10px) scaleX(1) rotate(0deg); }
+            75% { transform: translateX(5px) scaleX(0.9) rotate(-1deg); }
         }
 
         .info-box {
-            background: rgba(111, 168, 111, 0.15);
-            border-left: 5px solid #6fa86f;
-            padding: 25px;
-            margin: 25px 0;
-            border-radius: 12px;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.25) 0%, rgba(139, 111, 71, 0.15) 100%);
+            border-left: 6px solid #7DDA8F;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            backdrop-filter: blur(15px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 40px rgba(125, 218, 143, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            animation: boxSlideIn 0.9s ease-out backwards;
+        }
+
+        @keyframes boxSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .info-box:hover {
-            background: rgba(111, 168, 111, 0.22);
-            border-left-color: #7da86f;
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.35) 0%, rgba(139, 111, 71, 0.25) 100%);
+            border-left-color: #9FDB9F;
+            transform: translateX(10px);
+            box-shadow: 0 20px 60px rgba(125, 218, 143, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .info-box p {
+            color: #FFED4E;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .info-box ul {
+            list-style: none;
+        }
+
+        .info-box li {
+            color: #f0e6d9;
+            border-left: none;
+            margin: 10px 0;
+            padding-left: 0;
+            margin-left: 0;
+            font-size: 16px;
         }
 
         .comparison-box {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 35px 0;
+            gap: 30px;
+            margin: 40px 0;
         }
 
         .comparison-item {
-            background: linear-gradient(135deg, rgba(111, 168, 111, 0.12) 0%, rgba(139, 111, 71, 0.08) 100%);
-            padding: 22px;
-            border-radius: 15px;
-            border: 2px solid rgba(111, 168, 111, 0.25);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.2) 0%, rgba(255, 237, 78, 0.1) 100%);
+            padding: 28px;
+            border-radius: 25px;
+            border: 3px solid rgba(125, 218, 143, 0.4);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            animation: itemFloatIn 0.8s ease-out backwards;
+            position: relative;
+            overflow: hidden;
         }
 
+        @keyframes itemFloatIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .comparison-item:nth-child(1) { animation-delay: 0.3s; }
+        .comparison-item:nth-child(2) { animation-delay: 0.5s; }
+
         .comparison-item:hover {
-            background: linear-gradient(135deg, rgba(111, 168, 111, 0.25) 0%, rgba(139, 111, 71, 0.15) 100%);
-            border-color: rgba(111, 168, 111, 0.5);
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(111, 168, 111, 0.15);
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.35) 0%, rgba(255, 237, 78, 0.2) 100%);
+            border-color: rgba(255, 237, 78, 0.7);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 35px 80px rgba(125, 218, 143, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .comparison-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 237, 78, 0.1) 0%, transparent 70%);
+            animation: orbSmall 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes orbSmall {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
         }
 
         .comparison-item h3 {
-            color: #7da86f;
-            margin-bottom: 15px;
-            font-size: 20px;
-            font-weight: 700;
+            color: #9FDB9F;
+            margin-bottom: 18px;
+            font-size: 22px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-item:hover h3 {
+            color: #FFED4E;
+        }
+
+        .comparison-item ul {
+            position: relative;
+            z-index: 1;
+        }
+
+        .comparison-item li {
+            color: #f0e6d9;
+            border: none;
+            margin: 10px 0;
+            padding-left: 0;
+            font-size: 16px;
+            line-height: 1.7;
         }
 
         .slide-counter {
             position: fixed;
             top: 40px;
             right: 40px;
-            font-size: 20px;
-            color: #a88a5f;
-            font-weight: 700;
-            background: rgba(139, 111, 71, 0.18);
-            padding: 18px 32px;
-            border-radius: 12px;
-            border: 2px solid rgba(139, 111, 71, 0.4);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            font-size: 22px;
+            color: #FFED4E;
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(139, 111, 71, 0.35) 0%, rgba(125, 218, 143, 0.15) 100%);
+            padding: 20px 35px;
+            border-radius: 20px;
+            border: 3px solid rgba(139, 111, 71, 0.6);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
         }
 
         .slide-counter:hover {
-            background: rgba(139, 111, 71, 0.25);
-            border-color: rgba(139, 111, 71, 0.6);
+            background: linear-gradient(135deg, rgba(139, 111, 71, 0.5) 0%, rgba(125, 218, 143, 0.25) 100%);
+            border-color: #FFED4E;
+            transform: scale(1.08);
+            box-shadow: 0 20px 60px rgba(255, 237, 78, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .progress-bar {
             position: fixed;
             top: 0;
             left: 0;
-            height: 7px;
-            background: linear-gradient(90deg, #6fa86f 0%, #7da86f 50%, #a88a5f 100%);
-            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 3px 15px rgba(111, 168, 111, 0.4);
+            height: 10px;
+            background: linear-gradient(90deg, #7DDA8F 0%, #9FDB9F 25%, #FFD700 50%, #FFED4E 100%);
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 5px 25px rgba(125, 218, 143, 0.6),
+                        inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Navigation Controls */
+        .nav-buttons {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.3) 0%, rgba(139, 111, 71, 0.2) 100%);
+            border: 3px solid rgba(125, 218, 143, 0.6);
+            color: #FFED4E;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, rgba(125, 218, 143, 0.5) 0%, rgba(255, 237, 78, 0.2) 100%);
+            border-color: #FFED4E;
+            transform: scale(1.15) translateY(-5px);
+            box-shadow: 0 20px 50px rgba(125, 218, 143, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95) translateY(-2px);
         }
 
         @media (max-width: 1200px) {
@@ -308,6 +551,10 @@
             .slide h2 {
                 font-size: 44px;
             }
+
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -319,6 +566,7 @@
             .slide h1 {
                 font-size: 44px;
                 margin-bottom: 15px;
+                letter-spacing: 3px;
             }
 
             .slide h2 {
@@ -333,14 +581,13 @@
             .slide-content li {
                 font-size: 16px;
                 margin: 15px 0;
-                padding-left: 40px;
             }
 
             .slide-counter {
                 top: 15px;
                 right: 15px;
-                font-size: 16px;
-                padding: 12px 18px;
+                font-size: 18px;
+                padding: 12px 20px;
             }
 
             .slide-image img {
@@ -349,6 +596,23 @@
 
             .comparison-box {
                 grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nav-buttons {
+                bottom: 20px;
+                gap: 12px;
+            }
+
+            .nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 22px;
+            }
+
+            .info-box {
+                padding: 20px;
+                margin: 20px 0;
             }
         }
     </style>
@@ -380,15 +644,17 @@
                 <ul style="margin-bottom: 30px;">
                     <li><strong>Origine gallo-romaine</strong> : mauvais cheval, animal de trait</li>
                     <li><strong>Sens premier</strong> : labeur, utilité</li>
+                    <li><strong>Classification scientifique</strong> : Équus ferus caballus (famille Équidés)</li>
                 </ul>
 
                 <p style="text-align: center; font-size: 24px; color: #D4AF37; margin-bottom: 20px; margin-top: 40px;">
                     ✦ Premières représentations ✦
                 </p>
                 <ul>
-                    <li><strong>Lascaux (Préhistoire, 15 000 ans)</strong> - Europe</li>
-                    <li><strong>Interprétation</strong> : proie fascinante, force indomptable</li>
-                    <li><strong>Lien émotionnel</strong> : crainte mêlée d'admiration</li>
+                    <li><strong>Lascaux (Préhistoire, 17 000-15 000 ans)</strong> - Cavalerie rocheuse</li>
+                    <li><strong>Interprétation</strong> : proie sauvage, force indomptable, prestige de chasse</li>
+                    <li><strong>Lien émotionnel</strong> : crainte révérencieuse mêlée d'admiration</li>
+                    <li><strong>Autres sites</strong> : Chauvet, Altamira (représentation universelle)</li>
                 </ul>
             </div>
             <div class="slide-image">
@@ -401,30 +667,36 @@
             <div class="slide-content">
                 <h2>II. Contes et Légendes du Monde</h2>
                 <p style="text-align: center; font-size: 26px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
-                    Pégase vs Kelpie
+                    Pégase vs Kelpie : Deux Mondes
                 </p>
 
                 <div class="comparison-box">
                     <div class="comparison-item">
                         <h3>🕊️ PÉGASE (Grèce Antique)</h3>
                         <ul style="font-size: 17px;">
-                            <li><strong>Qui</strong> : cheval ailé divin</li>
-                            <li><strong>Quoi</strong> : aide à vaincre la Chimère</li>
-                            <li><strong>Pourquoi</strong> : <span style="color: #FFD700;">Allié noble</span></li>
+                            <li><strong>Origine</strong> : né du sang de Méduse</li>
+                            <li><strong>Qui</strong> : cheval ailé divin, immortel</li>
+                            <li><strong>Quoi</strong> : aide Bellérophon à vaincre la Chimère</li>
+                            <li><strong>Symbole</strong> : <span style="color: #FFD700;">Liberté, illumination, victoire</span></li>
                         </ul>
                     </div>
                     <div class="comparison-item">
                         <h3>🌑 KELPIE (Folklore Écossais)</h3>
                         <ul style="font-size: 17px;">
-                            <li><strong>Qui</strong> : esprit démoniaque noir</li>
-                            <li><strong>Quoi</strong> : attire et dévore les voyageurs</li>
-                            <li><strong>Pourquoi</strong> : <span style="color: #FFD700;">Menace, chaos</span></li>
+                            <li><strong>Origine</strong> : esprits des lacs et rivières</li>
+                            <li><strong>Qui</strong> : esprit démoniaque noir, métamorphe</li>
+                            <li><strong>Quoi</strong> : attire et dévore les voyageurs imprudents</li>
+                            <li><strong>Symbole</strong> : <span style="color: #FFD700;">Danger, chaos, nature sauvage</span></li>
                         </ul>
                     </div>
                 </div>
 
                 <p style="margin-top: 30px; text-align: center; font-size: 18px; color: #b0b0b0; font-weight: bold;">
-                    ↓ Cultures différentes = Perceptions inverses ↓
+                    ↓ Réalités géographiques et culturelles → Perceptions inverses ↓
+                </p>
+                
+                <p style="margin-top: 15px; text-align: center; font-size: 16px; color: #d9d3c9;">
+                    <strong>Autres exemples :</strong> Cheval de Troie (ruse), Hippogriffe (hybridité), Pouliche blanche (fantôme)
                 </p>
             </div>
             <div class="slide-image">
@@ -441,17 +713,19 @@
                 </p>
 
                 <ul style="margin-bottom: 30px; font-size: 18px;">
-                    <li><strong>Cheval de guerre</strong> : loyauté, bravoure, noblesse</li>
-                    <li><strong>Rupture avec Lascaux</strong> : de proie à compagnon valorisé</li>
-                    <li><strong>Symbole chrétien</strong> : instrument du Bien</li>
+                    <li><strong>Transformation radicale</strong> : de proie à compagnon valorisé</li>
+                    <li><strong>Cheval de guerre</strong> : loyauté, bravoure, noblesse incarnées</li>
+                    <li><strong>Destrier</strong> : formé au combat, coût équivalent à un château!</li>
+                    <li><strong>Symbolisme chrétien</strong> : monture du Bien (contre le Mal)</li>
                 </ul>
 
                 <div class="info-box">
                     <p><strong>📖 Bestiaire du Moyen-Âge</strong></p>
                     <ul style="margin-top: 15px; font-size: 17px;">
-                        <li><strong>Vision religieuse</strong> : cheval = fidélité divine</li>
-                        <li><strong>Reflet du chevalier</strong> : statut social, honneur</li>
-                        <li><strong>Continuité ?</strong> <span style="color: #FFD700;">OUI + RÉVOLUTION</span></li>
+                        <li><strong>Vision religieuse</strong> : cheval = fidélité divine, dévouement sans question</li>
+                        <li><strong>Reflet du chevalier</strong> : statut social, honneur, lignée aristocratique</li>
+                        <li><strong>Littérature courtoise</strong> : "Rocinante" (Amadis), "Bayard" (légende épique)</li>
+                        <li><strong>Rupture majeure</strong> : <span style="color: #FFD700;">de proie sauvage → compagnon héroïque</span></li>
                     </ul>
                 </div>
             </div>
@@ -465,24 +739,27 @@
             <div class="slide-content">
                 <h2>IV. L'Animal Aujourd'hui</h2>
                 <p style="text-align: center; font-size: 26px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
-                    Perception Contemporaine
+                    Un Nouvel Âge d'Or Émotionnel
                 </p>
 
                 <ul style="margin-bottom: 30px; font-size: 18px;">
-                    <li><strong>Sport & Loisir</strong> : équitation, compétitions</li>
-                    <li><strong>Thérapie émotionnelle</strong> : hippothérapie, connexion affective</li>
+                    <li><strong>Sport & Loisir</strong> : équitation olympique, saut, dressage, compétitions mondiales</li>
+                    <li><strong>Thérapie émotionnelle</strong> : hippothérapie, connexion affective thérapeutique</li>
+                    <li><strong>Film & Media</strong> : représentation nouvelle de l'intelligence équine</li>
                 </ul>
 
                 <div class="info-box">
-                    <p><strong>✦ Exemples Culturels ✦</strong></p>
+                    <p><strong>✦ Exemples Cinématographiques ✦</strong></p>
                     <ul style="margin-top: 15px; font-size: 17px;">
-                        <li><strong>« Cheval de Guerre »</strong> (Spielberg, 2011) : lien homme-animal en guerre</li>
-                        <li><strong>« L'Homme qui chuchotait »</strong> (Evans, 1998) : communication instinctive</li>
+                        <li><strong>« Cheval de Guerre »</strong> (Spielberg, 2011) : lien homme-animal dans l'horreur de guerre</li>
+                        <li><strong>« L'Homme qui chuchotait »</strong> (Evans, 1998) : communication instinctive, guérison mutuelle</li>
+                        <li><strong>« Spirit »</strong> (2002, DreamWorks) : liberté, indépendance, résistance</li>
+                        <li><strong>« Black Beauty »</strong> : classique intemporel de l'empathie animale</li>
                     </ul>
                 </div>
 
                 <p style="margin-top: 25px; font-size: 17px; color: #FFD700; font-weight: bold;">
-                    ⚠ Exception mondiale : agriculture, travail (pays pauvres)
+                    ⚠ <strong>Exception mondiale</strong> : Agriculture, travail, transport (pays en développement)
                 </p>
             </div>
             <div class="slide-image">
@@ -490,7 +767,76 @@
             </div>
         </div>
 
-        <!-- SLIDE 6: CONCLUSION -->
+        <!-- SLIDE 6: V. BIOLOGIE & ANATOMIE -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>V. Biologie & Anatomie du Cheval</h2>
+                <p style="text-align: center; font-size: 26px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
+                    Une Machine Vivante Extraordinaire
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h3>📊 Caractéristiques Physiques</h3>
+                        <ul style="font-size: 17px;">
+                            <li><strong>Poids</strong> : 380-550 kg (adulte)</li>
+                            <li><strong>Taille</strong> : 1.40m - 1.80m au garrot</li>
+                            <li><strong>Longévité</strong> : 25-30 ans (record : 62 ans)</li>
+                            <li><strong>Vitesse</strong> : 60-80 km/h au galop</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h3>🧠 Capacités Sensorielles</h3>
+                        <ul style="font-size: 17px;">
+                            <li><strong>Vision</strong> : 350° panoramique (sauf arrière)</li>
+                            <li><strong>Audition</strong> : sons jusqu'à 25 kHz</li>
+                            <li><strong>Odorat</strong> : 14× plus développé que l'humain</li>
+                            <li><strong>Mémoire</strong> : Exceptionnelle, apprentissage rapide</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <p><strong>💡 Aptitudes Cognitives</strong></p>
+                    <p style="margin-top: 10px; font-size: 16px;">
+                        Les chevaux constituent des <strong>êtres émotionnels complexes</strong> : capacité à lire les émotions humaines, empathie, reconnaissance faciale, résolution de problèmes.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-image">
+                <img src="image6.jpg" alt="Anatomie cheval">
+            </div>
+        </div>
+
+        <!-- SLIDE 7: VI. RACES & DIVERSITÉ -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>VI. Races & Diversité Mondiale</h2>
+                <p style="text-align: center; font-size: 26px; color: #D4AF37; margin-bottom: 25px; font-weight: bold;">
+                    Plus de 300 Races Identifiées
+                </p>
+
+                <ul style="margin-bottom: 25px; font-size: 18px;">
+                    <li><strong>Chevaux de trait</strong> : Percheron, Trait Breton (puissance, 900kg+)</li>
+                    <li><strong>Chevaux de selle</strong> : Pur-sang, Anglo-arabe (élégance, vitesse)</li>
+                    <li><strong>Poneys</strong> : Shetland, Connemara (petite taille, robustesse)</li>
+                    <li><strong>Chevaux régionaux</strong> : Lipizzan, Camargue, Islandais (patrimoine génétique)</li>
+                </ul>
+
+                <div class="info-box">
+                    <p><strong>🌍 Adaptations Régionales</strong></p>
+                    <ul style="margin-top: 15px; font-size: 17px;">
+                        <li><strong>Climat/Terrain</strong> : Evolution selon environnement (chaleur, froid, montagne)</li>
+                        <li><strong>Tempérament</strong> : Influence culturelle (élevage sélectif) et environnement</li>
+                        <li><strong>Spécialisation</strong> : Course, dressage, saut, travail agricole, traction</li>
+                        <li><strong>Génétique</strong> : Certaines lignées tracées depuis l'Antiquité</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-image">
+                <img src="image7.jpg" alt="Races chevaux">
+            </div>
+        </div>
         <div class="slide">
             <div class="slide-content">
                 <h2>Conclusion</h2>
@@ -517,7 +863,7 @@
     </div>
 
     <div class="slide-counter">
-        <span id="currentSlide">1</span> / <span id="totalSlides">6</span>
+        <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
     </div>
 
 
